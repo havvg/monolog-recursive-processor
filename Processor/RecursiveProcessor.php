@@ -45,10 +45,10 @@ class RecursiveProcessor implements EventSubscriberInterface
 
     public function processStructure(ProcessDataEvent $event)
     {
-        $data = $event->getData();
+        $data = array();
         $record = $event->getRecord();
 
-        foreach ($data as $key => $entry) {
+        foreach ($event->getData() as $key => $entry) {
             $data[$key] = $this->process($entry, $record);
         }
 

@@ -92,4 +92,41 @@ class RecursiveProcessTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals($expected, $processed);
     }
+
+    public function testRecursiveIterator()
+    {
+        $data = new \stdClass();
+        $data->foo = 'bar';
+
+        $record = array(
+            'context' => new \ArrayIterator(array(
+                'foo' => $data,
+                'bar' => $data,
+                'flat' => 5,
+            )),
+        );
+
+        $dispatcher = new EventDispatcher();
+        $dispatcher->addListener(LogEvents::PROCESS_ENTRY, function(ProcessDataEvent $event) {
+            if (!$event->getData() instanceof \stdClass) {
+                return;
+            }
+
+            $event->setData(array('foo' => $event->getData()->foo));
+        });
+
+        $processor = new RecursiveProcessor($dispatcher);
+        $dispatcher->addSubscriber($processor);
+
+        $processed = $processor->__invoke($record);
+
+        $expected = array(
+            'context' => array(
+                'foo'=> array('foo' => 'bar'),
+                'bar' => array('foo' => 'bar'),
+                'flat' => 5,
+            ),
+        );
+        $this->assertEquals($expected, $processed);
+    }
 }
