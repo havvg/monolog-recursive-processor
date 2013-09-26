@@ -22,9 +22,9 @@ class LoggableProcessor implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return [
-            LogEvents::PROCESS_ENTRY => [ 'process', -72 ],
-            LogEvents::PROCESS_STRUCTURE => [ 'process', -72 ],
-        ];
+        return array(
+            LogEvents::PROCESS_ENTRY => array('process', -72),
+            LogEvents::PROCESS_STRUCTURE => array('process', -72),
+        );
     }
 }
