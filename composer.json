@@ -16,10 +16,10 @@
     },
     "target-dir": "Havvg/Monolog/RecursiveProcessor",
     "require": {
-        "monolog/monolog": "~1.6",
-        "symfony/event-dispatcher": "~2.3"
+        "monolog/monolog": "^1.6",
+        "symfony/event-dispatcher": "^2.3|^3.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~3.7"
+        "phpunit/phpunit": "@stable"
     }
 }
